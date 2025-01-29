@@ -25,14 +25,10 @@
       padding: 40px 30px;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
+      width: 70%;
       max-width: 500px;
       text-align: center;
       transition: transform 0.3s ease;
-    }
-
-    .container:hover {
-      transform: translateY(-10px);
     }
 
     h1 {
@@ -121,17 +117,17 @@
 
     <label for="origem">Selecione a unidade de origem:</label>
     <select id="origem" onchange="converterArea()">
-      <option value="m2">Metros Quadrados (m²)</option>
-      <option value="litro">litro</option>
-      <option value="alqueire">Alqueire</option>
-      <option value="quarta">Quarta</option>
-      <option value="hectare">Hectare</option>
+      <option value="m2">Metro(s) Quadrado(s)(m²)</option>
+      <option value="litro">litro(s)</option>
+      <option value="alqueire">Alqueire(s)</option>
+      <option value="quarta">Quarta(s)</option>
+      <option value="hectare">Hectare(s)</option>
     </select>
 
     <label for="destino">Selecione a unidade de destino:</label>
     <select id="destino" onchange="converterArea()">
-      <option value="m2">Metros Quadrados (m²)</option>
-      <option value="hectare">Hectare</option>
+      <option value="m2">Metro(s) Quadrado(s) (m²)</option>
+      <option value="hectare">Hectare(s)</option>
     </select>
 
     <button onclick="converterArea()">Converter</button>
@@ -145,42 +141,64 @@
 
   <script>
     function converterArea() {
-      const valor = parseFloat(document.getElementById("area-valor").value);
-      const unidadeOrigem = document.getElementById("origem").value;
-      const unidadeDestino = document.getElementById("destino").value;
-      const resultado = document.getElementById("resultado");
+    const valor = parseFloat(document.getElementById("area-valor").value);
+    const unidadeOrigem = document.getElementById("origem").value;
+    const unidadeDestino = document.getElementById("destino").value;
+    const resultado = document.getElementById("resultado");
 
-      if (!isNaN(valor) && valor > 0) {
-        let areaEmMetrosQuadrados = 0;
-
-        // Converter o valor de entrada para metros quadrados
-        if (unidadeOrigem === "m2") {
-          areaEmMetrosQuadrados = valor;
-        } else if (unidadeOrigem === "litro") {
-          areaEmMetrosQuadrados = valor; // Considerando que 1 litro = 1 dm³, o valor será em metros quadrados dependendo da profundidade
-        } else if (unidadeOrigem === "alqueire") {
-          areaEmMetrosQuadrados = valor * 24200;
-        } else if (unidadeOrigem === "quarta") {
-          areaEmMetrosQuadrados = valor * 6050;
-        } else if (unidadeOrigem === "hectare") {
-          areaEmMetrosQuadrados = valor * 10000;
-        }
-
-        // Converter o valor em metros quadrados para a unidade de destino
-        let resultadoFinal = 0;
-        if (unidadeDestino === "m2") {
-          resultadoFinal = areaEmMetrosQuadrados;
-        } else if (unidadeDestino === "hectare") {
-          resultadoFinal = areaEmMetrosQuadrados / 10000;
-        }
-
-        resultado.innerHTML = `
-          <p>${valor} ${unidadeOrigem} equivale a ${resultadoFinal.toFixed(2)} ${unidadeDestino}.</p>
-        `;
-      } else {
-        resultado.innerHTML = "<p>Por favor, insira um valor válido para a área de origem</p>";
-      }
+    if (isNaN(valor) || valor <= 0) {
+        resultado.innerHTML = "<p>Por favor, insira um valor válido.</p>";
+        return;
     }
+
+    let areaEmMetrosQuadrados = 0;
+
+    // Converter unidade de origem para metros quadrados
+    switch (unidadeOrigem) {
+        case "m2":
+            areaEmMetrosQuadrados = valor;
+            break;
+        case "litro":
+            areaEmMetrosQuadrados = valor * 774,40;
+            break;
+        case "alqueire":
+            areaEmMetrosQuadrados = valor * 30976;
+            break;
+        case "quarta":
+            areaEmMetrosQuadrados = valor * 7744;
+            break;
+        case "hectare":
+            areaEmMetrosQuadrados = valor * 10000;
+            break;
+        default:
+            resultado.innerHTML = "<p>Unidade de origem inválida.</p>";
+            return;
+    }
+
+    let resultadoFinal = 0;
+
+    // Converter metros quadrados para unidade de destino
+    switch (unidadeDestino) {
+        case "m2":
+            resultadoFinal = areaEmMetrosQuadrados;
+            resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(2)}</strong> ${unidadeDestino}.</p>`;
+            break;
+        case "hectare":
+            resultadoFinal = areaEmMetrosQuadrados / 10000;
+            if (unidadeOrigem === 'litro'){
+                resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(5)}</strong> ${unidadeDestino}.</p>`;
+            }else{
+                resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(4)}</strong> ${unidadeDestino}.</p>`;
+            }
+            
+            break;
+        default:
+            resultado.innerHTML = "<p>Unidade de destino inválida.</p>";
+            return;
+    }
+    
+    }
+
   </script>
 
 </body>
