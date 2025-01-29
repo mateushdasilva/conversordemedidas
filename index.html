@@ -1,69 +1,187 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Áreas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-export default function AreaConverter() {
-  const [value, setValue] = useState("");
-  const [fromUnit, setFromUnit] = useState("m²");
-  const [toUnit, setToUnit] = useState("ft²");
-  const [result, setResult] = useState(null);
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #6FCF97, #27AE60); /* Gradiente de verdes */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-  const units = {
-    "m²": 1,
-    "ft²": 10.7639,
-    "yd²": 1.19599,
-    "hectare": 0.0001,
-    "acre": 0.000247105,
-  };
+    .container {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
 
-  const convert = () => {
-    if (!value || isNaN(value)) return;
-    const baseValue = parseFloat(value) * units[fromUnit];
-    const convertedValue = baseValue / units[toUnit];
-    setResult(convertedValue.toFixed(4));
-  };
+    .container:hover {
+      transform: translateY(-10px);
+    }
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-      <Card className="w-full max-w-md p-6 bg-white rounded-2xl shadow-xl">
-        <CardContent className="flex flex-col space-y-4">
-          <h1 className="text-2xl font-bold text-center">Conversor de Áreas</h1>
-          <Input
-            type="number"
-            placeholder="Digite a área"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <div className="flex justify-between">
-            <select
-              className="p-2 border rounded-md"
-              value={fromUnit}
-              onChange={(e) => setFromUnit(e.target.value)}
-            >
-              {Object.keys(units).map((unit) => (
-                <option key={unit} value={unit}>{unit}</option>
-              ))}
-            </select>
-            <span className="self-center text-lg">→</span>
-            <select
-              className="p-2 border rounded-md"
-              value={toUnit}
-              onChange={(e) => setToUnit(e.target.value)}
-            >
-              {Object.keys(units).map((unit) => (
-                <option key={unit} value={unit}>{unit}</option>
-              ))}
-            </select>
-          </div>
-          <Button className="w-full" onClick={convert}>Converter</Button>
-          {result !== null && (
-            <div className="text-center text-lg font-semibold mt-4">
-              Resultado: {result} {toUnit}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+    h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    label {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 10px;
+      display: block;
+      font-weight: 500;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    input[type="number"]:focus, select:focus {
+      border-color: #27AE60; /* Cor verde mais intensa */
+      outline: none;
+    }
+
+    button {
+      padding: 12px 30px;
+      background-color: #27AE60; /* Cor verde mais intensa */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s;
+    }
+
+    button:hover {
+      background-color: #1E824C; /* Verde mais escuro */
+      transform: scale(1.05);
+    }
+    select{
+        text-align: center;
+    }
+
+    input{
+        text-align: center;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #333;
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .footer {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 30px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #27AE60; /* Verde */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Conversor de Áreas</h1>
+
+    <label for="area-valor">Informe o valor da área de origem</label>
+    <input type="number" id="area-valor" placeholder="Exemplo: 50" oninput="converterArea()">
+
+    <label for="origem">Selecione a unidade de origem:</label>
+    <select id="origem" onchange="converterArea()">
+      <option value="m2">Metros Quadrados (m²)</option>
+      <option value="litro">litro</option>
+      <option value="alqueire">Alqueire</option>
+      <option value="quarta">Quarta</option>
+      <option value="hectare">Hectare</option>
+    </select>
+
+    <label for="destino">Selecione a unidade de destino:</label>
+    <select id="destino" onchange="converterArea()">
+      <option value="m2">Metros Quadrados (m²)</option>
+      <option value="hectare">Hectare</option>
+    </select>
+
+    <button onclick="converterArea()">Converter</button>
+
+    <div class="result" id="resultado"></div>
+
+    <div class="footer">
+      <p>Feito com ♥ por <a href="https://www.exemplo.com" target="_blank">Seu Nome</a></p>
     </div>
-  );
-}
+  </div>
+
+  <script>
+    function converterArea() {
+      const valor = parseFloat(document.getElementById("area-valor").value);
+      const unidadeOrigem = document.getElementById("origem").value;
+      const unidadeDestino = document.getElementById("destino").value;
+      const resultado = document.getElementById("resultado");
+
+      if (!isNaN(valor) && valor > 0) {
+        let areaEmMetrosQuadrados = 0;
+
+        // Converter o valor de entrada para metros quadrados
+        if (unidadeOrigem === "m2") {
+          areaEmMetrosQuadrados = valor;
+        } else if (unidadeOrigem === "litro") {
+          areaEmMetrosQuadrados = valor; // Considerando que 1 litro = 1 dm³, o valor será em metros quadrados dependendo da profundidade
+        } else if (unidadeOrigem === "alqueire") {
+          areaEmMetrosQuadrados = valor * 24200;
+        } else if (unidadeOrigem === "quarta") {
+          areaEmMetrosQuadrados = valor * 6050;
+        } else if (unidadeOrigem === "hectare") {
+          areaEmMetrosQuadrados = valor * 10000;
+        }
+
+        // Converter o valor em metros quadrados para a unidade de destino
+        let resultadoFinal = 0;
+        if (unidadeDestino === "m2") {
+          resultadoFinal = areaEmMetrosQuadrados;
+        } else if (unidadeDestino === "hectare") {
+          resultadoFinal = areaEmMetrosQuadrados / 10000;
+        }
+
+        resultado.innerHTML = `
+          <p>${valor} ${unidadeOrigem} equivale a ${resultadoFinal.toFixed(2)} ${unidadeDestino}.</p>
+        `;
+      } else {
+        resultado.innerHTML = "<p>Por favor, insira um valor válido para a área de origem</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
