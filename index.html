@@ -22,7 +22,7 @@
 
     .container {
       background-color: #fff;
-      padding: 40px 30px;
+      padding: 10px 30px;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 70%;
@@ -95,10 +95,20 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    .logo {
+        width: 200px; /* Ajuste conforme necessário */
+        height: auto;
+        opacity: 0.8; /* Deixa um pouco mais suave */
+        transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+        opacity: 1;
+    }
+
     .footer {
-      font-size: 0.9rem;
-      color: #777;
-      margin-top: 30px;
+        margin-top: 20px;
+        text-align: center;
     }
 
     .footer a {
@@ -135,7 +145,7 @@
     <div class="result" id="resultado"></div>
 
     <div class="footer">
-      <p>Feito com ♥ por <a href="https://www.exemplo.com" target="_blank">Seu Nome</a></p>
+        <img src="logo.png" alt="Meu Logotipo" class="logo">
     </div>
   </div>
 
