@@ -129,17 +129,17 @@
     <select id="origem" onchange="converterArea()">
       <option value="selecione">Selecione</option>
       <option value="m2">Metro(s) Quadrado(s)(m²)</option>
-      <option value="litro">litro(s)</option>
-      <option value="alqueire">Alqueire(s)</option>
-      <option value="quarta">Quarta(s)</option>
-      <option value="hectare">Hectare(s)</option>
+      <option value="litro(s)">litro(s)</option>
+      <option value="alqueire(s)">Alqueire(s)</option>
+      <option value="quarta(s)">Quarta(s)</option>
+      <option value="hectare(s)">Hectare(s)</option>
     </select>
 
     <label for="destino">Selecione a unidade de destino:</label>
     <select id="destino" onchange="converterArea()">
       <option value="selecione">Selecione</option>
       <option value="m2">Metro(s) Quadrado(s) (m²)</option>
-      <option value="hectare">Hectare(s)</option>
+      <option value="hectare(s)">Hectare(s)</option>
     </select>
 
     <button onclick="converterArea()">Converter</button>
@@ -170,16 +170,16 @@
         case "m2":
             areaEmMetrosQuadrados = valor;
             break;
-        case "litro":
+        case "litro(s)":
             areaEmMetrosQuadrados = valor * 774,40;
             break;
-        case "alqueire":
+        case "alqueire(s)":
             areaEmMetrosQuadrados = valor * 30976;
             break;
-        case "quarta":
+        case "quarta(s)":
             areaEmMetrosQuadrados = valor * 7744;
             break;
-        case "hectare":
+        case "hectare(s)":
             areaEmMetrosQuadrados = valor * 10000;
             break;
         default:
@@ -195,9 +195,9 @@
             resultadoFinal = areaEmMetrosQuadrados;
             resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(2)}</strong> ${unidadeDestino}.</p>`;
             break;
-        case "hectare":
+        case "hectare(s)":
             resultadoFinal = areaEmMetrosQuadrados / 10000;
-            if (unidadeOrigem === 'litro'){
+            if (unidadeOrigem === 'litro(s)'){
                 resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(5)}</strong> ${unidadeDestino}.</p>`;
             }else{
                 resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(4)}</strong> ${unidadeDestino}.</p>`;
