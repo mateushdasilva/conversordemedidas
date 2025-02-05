@@ -31,6 +31,19 @@
       transition: transform 0.3s ease;
     }
 
+    .container2 {
+      background-color: #fff;
+      text-align: center;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 10px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 70%;
+      max-width: 500px;
+      transition: transform 0.3s ease;
+    }
+
     h1 {
       font-size: 2rem;
       color: #333;
@@ -95,11 +108,30 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    .linha {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+    }
+
     .logo {
         width: 200px; /* Ajuste conforme necessário */
         height: auto;
         opacity: 0.8; /* Deixa um pouco mais suave */
         transition: opacity 0.3s ease;
+    }
+
+    .texto {
+        margin: 0 10px;
+        font-weight: bold;
+        color: #888;
+    }
+
+    .texto2 {
+        margin: 0 10px;
+        font-weight: bold;
+        color: #888;
     }
 
     .logo:hover {
@@ -114,6 +146,15 @@
     .footer a {
       text-decoration: none;
       color: #27AE60; /* Verde */
+    }
+
+    #resultadoregra {
+        background-color: #27AE60;
+        color: white;
+        font-weight: bold;
+        padding: 15px;
+        height: 45px;
+        width: 450px;
     }
   </style>
 </head>
@@ -145,6 +186,32 @@
     <button onclick="converterArea()">Converter</button>
 
     <div class="result" id="resultado"></div>
+
+    <div class="footer">
+        <img src="logo.png" alt="Meu Logotipo" class="logo">
+    </div>
+  </div>
+
+  <div class="container2">
+    <h1>Regra de Três</h1>
+    <br><br>
+
+    <div class="linha">
+        <input type="number" id="a" placeholder="A">
+        <span class="texto2">ESTÁ PARA</span>
+        <input type="number" id="b" placeholder="B">
+    </div>
+    <div class="linha">
+        <span class="texto2">ASSIM COMO</span>
+    </div>
+    <div class="linha">
+        <input type="number" id="c" placeholder="C">
+        <span class="texto2">ESTÁ PARA</span>
+        <span id="resultadoregra">X</span>
+    </div>
+    <br>
+    <br><br><br><br><br>
+    <button onclick="calcularregra()">Calcular</button>
 
     <div class="footer">
         <img src="logo.png" alt="Meu Logotipo" class="logo">
@@ -211,6 +278,19 @@
     
     }
 
+    function calcularregra() {
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            
+            if (isNaN(a) || isNaN(b) || isNaN(c) || b === 0) {
+                document.getElementById("resultado").innerText = "?";
+                return;
+            }
+            
+            let x = (b * c) / a;
+            document.getElementById("resultadoregra").innerText = x.toFixed(2);
+        }
   </script>
 
 </body>
