@@ -14,7 +14,7 @@
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #6FCF97, #27AE60); /* Gradiente de verdes */
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -32,6 +32,19 @@
     }
 
     .container2 {
+      background-color: #fff;
+      text-align: center;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 10px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 70%;
+      max-width: 500px;
+      transition: transform 0.3s ease;
+    }
+
+    .container3 {
       background-color: #fff;
       text-align: center;
       display: inline-block;
@@ -221,6 +234,27 @@
     </div>
   </div>
 
+   <!--Container fração-->
+   <div class="container3">
+    <h1>Cálculo de Fração de Área</h1>
+
+    <label for="areaTotal">Área Total do Imóvel (m² ou ha):</label>
+    <input type="number" id="areaTotal" placeholder="Digite a área total">
+    
+    <label>Área da Fração (m² ou ha):</label>
+    <div class="fraction-input">
+        <input type="number" id="numerador" placeholder="Numerador">
+        <hr style="width: 100%; border: 2px solid black;">
+        <input type="number" id="denominador" placeholder="Denominador">
+    </div>
+
+    <button onclick="calcularFracao()">Calcular</button>
+    <p class="result" id="resultadofracao"></p>
+
+    <div class="footer">
+        <img src="logo.png" alt="Meu Logotipo" class="logo">
+    </div>
+  </div>
   
   <!--Scritps-->
   <script>
@@ -296,6 +330,23 @@
             let x = (b * c) / a;
             document.getElementById("resultadoregra").innerText = x.toFixed(2);
         }
+  
+    function calcularFracao() {
+        let areaTotal = parseFloat(document.getElementById('areaTotal').value);
+        let numerador = parseFloat(document.getElementById('numerador').value);
+        let denominador = parseFloat(document.getElementById('denominador').value);
+            
+        if (isNaN(areaTotal) || isNaN(numerador) || isNaN(denominador) || areaTotal <= 0 || numerador <= 0 || denominador <= 0) {
+            document.getElementById('resultado').innerText = "Por favor, insira valores válidos.";
+            return;
+          }
+            
+        let areaFracao = (numerador / denominador) * areaTotal;
+        document.getElementById('resultadofracao').innerText = `A fração da área é ${areaFracao} m²/ha`;
+        }
+  
+  
+  
   </script>
 
 </body>
