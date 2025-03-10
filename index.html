@@ -149,6 +149,7 @@
       <option value="selecione">Selecione</option>
       <option value="m2">Metro(s) Quadrado(s) (m²)</option>
       <option value="hectare(s)">Hectare(s)</option>
+      <option value="alqueire(s)">Alqueire(s)</option>
     </select>
 
     <button onclick="converterArea()">Converter</button>
@@ -264,8 +265,11 @@
                 resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(5)}</strong> ${unidadeDestino}.</p>`;
             }else{
                 resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(4)}</strong> ${unidadeDestino}.</p>`;
-            }
-            
+            }  
+            break;
+        case "alqueire(s)":
+            resultadoFinal = areaEmMetrosQuadrados / 30976;
+            resultado.innerHTML = `<p>${valor} ${unidadeOrigem} equivale a <strong>${resultadoFinal.toFixed(4)}</strong> ${unidadeDestino}.</p>`;
             break;
         default:
             resultado.innerHTML = "<p>Unidade de destino inválida.</p>";
